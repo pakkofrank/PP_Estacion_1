@@ -1215,13 +1215,13 @@ var Tl={id:"highlight",HIGHLIGHT_STEP_DELIMITER:"|",HIGHLIGHT_LINE_DELIMITER:","
 				plugins: [ RevealHighlight ]
 			});
 		</script>
-
                 <script type="text/javascript" src="./Controller.js"></script>
-		<script>
-    	<?php
-			echo "var uCorreo = '" . $atributos["uCorreo"][0] . "';";
-		?>
-    	</script>
+	<script>
+    <?php
+		echo "var uCorreo = '" . $atributos["uCorreo"][0] . "';";
+	?>
+    </script
+
 
 		
 	</body>
