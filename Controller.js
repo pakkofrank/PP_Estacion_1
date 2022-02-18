@@ -15,7 +15,7 @@ buttons = Array.from(document.getElementsByClassName('button'));
 var slides_prev = Array.from(document.getElementsByClassName('slides')[0].childNodes);
 slides = slides_prev.filter((e) => ( e.nodeName == "SECTION"));
 controls = Array.from(document.getElementsByClassName('controls')[0].childNodes);
-questions = Array.from(slides.slice(1, 32).map((e) => (e.getAttribute('data-id'))));
+questions = Array.from(slides.slice(1, 10).map((e) => (e.getAttribute('data-id'))));
 
 controls.forEach((control) => {
     if (control.nodeName == 'BUTTON' && (control.classList.contains('navigate-right'))) {
@@ -39,20 +39,6 @@ buttons.forEach((button) => {
         button.addEventListener('click', () => {
             currentSlide = document.getElementsByClassName('present')[0];
             selectOption(currentSlide, button, 1);
-        })
-    }
-
-    if (button.classList.contains('rc')) {
-        button.addEventListener('click', () => {
-            currentSlide = document.getElementsByClassName('present')[0];
-            selectOption(currentSlide, button, 2);
-        })
-    }
-
-    if (button.classList.contains('rd')) {
-        button.addEventListener('click', () => {
-            currentSlide = document.getElementsByClassName('present')[0];
-            selectOption(currentSlide, button, 3);
         })
     }
 })
@@ -149,17 +135,43 @@ function validateAnswers(q, a) {
 }
 
 function getFeedBack(score) {
-    if (score > 90) {
+    if (score > 9) {
         return feed.get('Alto');
-    } else if (score > 73) {
+    } else if (score > 7) {
         return feed.get('Moderado');
-    } else if (score > 53) {
+    } else if (score > 5) {
         return feed.get('Sugestivo');
-    } else if (score > 34) {
+    } else if (score > 4) { 
         return feed.get('Bajo');
     } else {
         return feed.get('Nulo');
     }
+}
+
+//// posible forma
+
+
+let pregunta = [], 
+
+function sumatoria(){
+    if (pregunta = 0){
+        score + 1;
+    }else{
+        score + 0;
+    }
+
+    if (pregunta = 0){
+        score + 1;
+    }
+
+    if (pregunta = 0){
+        score + 1;
+    }
+
+    if (pregunta = 0){
+        score + 1;
+    }
+
 }
 
 function sendData(score, feedback) {
@@ -209,3 +221,38 @@ async function postData(url = '', data = {}) {
     // parses JSON response into native JavaScript objects
 
 }
+
+
+
+/* posible codigo
+
+mostrarTest(); 
+
+function mostrarResultado() {
+  const respuestas = contenedor.querySelectorAll(".respuestas");
+  let respuestasCorrectas = 0;
+
+  preguntas.forEach((preguntaActual, numeroDePregunta) => {
+    const todasLasRespuestas = respuestas[numeroDePregunta];
+    const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+    const respuestaElegida = (
+      todasLasRespuestas.querySelector(checkboxRespuestas) || {}
+    ).value;
+
+    if (respuestaElegida === preguntaActual.respuestaCorrecta) {
+      respuestasCorrectas++;
+
+      respuestas[numeroDePregunta].style.color = "blue";
+    } else {
+      respuestas[numeroDePregunta].style.color = "red";
+    }
+  });
+
+  resultadoTest.innerHTML =
+    "Calificacion " +
+    respuestasCorrectas
+   
+    ;
+}
+
+*/
