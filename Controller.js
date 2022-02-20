@@ -1,7 +1,7 @@
 var buttons = [];
 var slides = [];
 var currentSlide = null;
-var answers = new Map();
+var answers = new Map(); //mandar al servidor para pasar las respuestas
 var controls = [];
 var questions = [];
 var feed = new Map();
@@ -224,7 +224,7 @@ async function postData(url = '', data = {}) {
 
 
 
-/* posible codigo
+/* posible codigo*/
 
 mostrarTest(); 
 
@@ -254,5 +254,3 @@ function mostrarResultado() {
    
     ;
 }
-
-*/
