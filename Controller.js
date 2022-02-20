@@ -24,21 +24,28 @@ controls.forEach((control) => {
 })
 
 
+/// 1. poner clases a los botones rCierto y rFalso en el php/html
+/// 2. poner a cada slide un numero de pregunta
+/// 3. cambiar los nombres de las clases en el codigo js
+/// 4. cambiar la funcion de envio para mandar el map de las respuestas al servidor
+/// 5. cambiar la funcion de mostrar en la ultima diapositiva para mostrar el nuevo feedback y la calificacion
+
+
 buttons.forEach((button) => {
     button.addEventListener('mouseover', Hover);
     button.addEventListener('mouseleave', Leave);
 
-    if (button.classList.contains('ra')) {
+    if (button.classList.contains('ra')) {  // ra = nombre de la clase del boton seleccioado
         button.addEventListener('click', () => {
             currentSlide = document.getElementsByClassName('present')[0];
-            selectOption(currentSlide, button, 0);
+            selectOption(currentSlide, button,'cierto'); // cambiar current slide por el numero de la pregunta
         })
     }
 
-    if (button.classList.contains('rb')) {
+    if (button.classList.contains('rb')) { // rb = nombre de la clase del boton seleccioado
         button.addEventListener('click', () => {
             currentSlide = document.getElementsByClassName('present')[0];
-            selectOption(currentSlide, button, 1);
+            selectOption(currentSlide, button, 'falso');
         })
     }
 })
@@ -90,14 +97,14 @@ function slideHandler() {
 
 function loadAnswers() {
     currentSlide = document.getElementsByClassName('present')[0];
-    if (answers.has(currentSlide.getAttribute('data-id'))) {
+    if (answers.has(currentSlide.getAttribute('data-id'))) { // si necesitas cargar las respuestas previas cambiar data id por el numero de respuesta actual
         answers.get(currentSlide.getAttribute('data-id'));
     }
 }
 
 
 
-function evaluation() {
+async function evaluation() { //renombrar si quieres o es necesario y cambiar para mostrar resultados en la ultima diapositiva
     let score = null;
     let rest = validateAnswers(questions, answers);
 
@@ -106,10 +113,11 @@ function evaluation() {
         for (let [key, value] of answers) {
             score += value;
         }
+        let result = await sendData(score, feedback); //cambiar score y feedback por el map de las respuestas
         let feedback = getFeedBack(score);
-        sendData(score, feedback);
        document.getElementsByClassName('controls')[0].style.display = 'none';
-        document.getElementById('feedback').innerHTML = 'Con base en las respuetsas proporcionadas se determino tu nivel de afrontamiento y resiliencia como ' + feedback;
+        document.getElementById('feedback').innerHTML = 
+        'Con base en las respuetsas proporcionadas se determino tu nivel de afrontamiento y resiliencia como ' + feedback; // mensaje final
    } else {
         alert("te faltan preguntas por contestar!")
       console.log()
@@ -117,12 +125,12 @@ function evaluation() {
     } 
 }
 
-function goto(id) {
+function goto(id) { // regresa a la pregunta que se le pase por id
     let diapo = questions.indexOf(id) + 1;
     setTimeout(() => {console.log('redirect'); window.location.assign(`./index.php#/${diapo}`)}, 900);
 }
 
-function validateAnswers(q, a) {
+function validateAnswers(q, a) { //revisa si existen preguntas sin  constestar
     res = null;
     for (let i = 0; i < questions.length; i++) {
         if (!answers.has(questions[i])) {
@@ -134,7 +142,7 @@ function validateAnswers(q, a) {
     return res;
 }
 
-function getFeedBack(score) {
+function getFeedBack(score) { // devuelve el feedback correspondiente a la puntuacion dada en el argumento
     if (score > 9) {
         return feed.get('Alto');
     } else if (score > 7) {
@@ -151,7 +159,7 @@ function getFeedBack(score) {
 //// posible forma
 
 
-let pregunta = [], 
+let pregunta = [] 
 
 function sumatoria(){
     if (pregunta = 0){
@@ -174,7 +182,7 @@ function sumatoria(){
 
 }
 
-function sendData(score, feedback) {
+async function sendData(score, feedback) { //manda los datos al servidor
     /*let jsonObj = {
         "curso": "UDC9190",
         "recurso": "A1",
@@ -186,20 +194,20 @@ function sendData(score, feedback) {
 
     let jsonObj = {
         score,
-        feedback,
+        feedback,  //cambiar los objetos a enviar al servidor por las respuestas y/o objetos que requieras
 		user : uCorreo,
     }
 
     console.log(JSON.stringify(jsonObj));
     let APIUrl = './save.php';
-    postData(APIUrl, jsonObj).then(result => console.log(JSON.parse(result))).catch(() => alert('No fue posible registrar de forma automática su participación. Envíe un correo a agentestic@ucol.mx y notifique que realizó la actividad'));
+    let res = postData(APIUrl, jsonObj).then(result => console.log(JSON.parse(result))).catch(() => alert('No fue posible registrar de forma automática su participación. Envíe un correo a agentestic@ucol.mx y notifique que realizó la actividad'));
 	//postData(APIUrl, jsonObj).then(result => console.log(JSON.parse(result))).catch(error => console.log('error:', error));
 
 }
 
 
 
-async function postData(url = '', data = {}) {
+async function postData(url = '', data = {}) { // crea la peticion http post y devuelve la respuesta en formato json
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     // myHeaders.append("http-equiv", "Content-Security-Policy");
@@ -226,9 +234,9 @@ async function postData(url = '', data = {}) {
 
 /* posible codigo*/
 
-mostrarTest(); 
+//mostrarTest(); 
 
-function mostrarResultado() {
+function mostrarResultado() { 
   const respuestas = contenedor.querySelectorAll(".respuestas");
   let respuestasCorrectas = 0;
 

@@ -1208,10 +1208,10 @@ var Tl={id:"highlight",HIGHLIGHT_STEP_DELIMITER:"|",HIGHLIGHT_LINE_DELIMITER:","
 		</script>
                 <script type="text/javascript" src="./Controller.js"></script>
 	<script>
-    <?php
+        <!--php
 		echo "var uCorreo = '" . $atributos["uCorreo"][0] . "';";
 	?>
-    </script
+    </script-->
 
 
 		

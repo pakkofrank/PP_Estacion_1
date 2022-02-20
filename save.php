@@ -48,4 +48,9 @@ curl_close($curl);
 header('Content-type: application/json');
 echo json_encode( $resp );
 
+
+// crear variable calif y mapa de repuestas
+
+
+// crear funcion de evaluacion y retornar la misma al cliente
 ?>
